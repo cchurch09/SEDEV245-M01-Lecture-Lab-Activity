@@ -51,12 +51,23 @@ def save_users():
 # -----------------------------
 # Core Functionality
 # -----------------------------
+
+#I added a way for when the user has to make a password it has to be atleast ten characters long.
+def valid_password(password):   
+    if len(password) < 10:
+        return False, "Password must be at least ten characters long."
+    return True, ""
+
 def register_user():
     username = input("Enter new username: ").strip()
     if username in users:
         print(f"User '{username}' already exists.")
         return
     password = input("Enter password: ").strip()
+    valid, message = valid_password(password)  #second part of adding user
+    if not valid:
+        print(message)
+        return
     role = input("Enter role (admin/user): ").strip().lower()
     if role not in ["admin", "user"]:
         print("Invalid role. Defaulting to 'user'.")
